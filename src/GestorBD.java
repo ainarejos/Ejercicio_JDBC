@@ -98,4 +98,17 @@ public class GestorBD {
                     + ", IdClient: " + r.getInt("IDCLIENT"));
         }
     }
+
+    public int obtenirIDprodcute(String producte) throws SQLException {
+        Statement obtenir = conn.createStatement();
+        ResultSet r = obtenir.executeQuery("SELECT * FROM PRODUCTES WHERE NOM='" + producte + "'");
+        return r.getInt("ID");
+    }
+
+    public void afegirEncarrecsProductes(EncarrecsProductes e) throws Exception{
+        Statement update = conn.createStatement();
+        String valors = e.getIdencarrec() + ",'" + e.getIdproducte() + "','" + e.getNumarticlest()+ "'";
+        update.executeUpdate("INSERT INTO ENCARRECSPRODCUTES VALUE(" + valors + ")");
+
+    }
 }

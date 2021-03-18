@@ -135,6 +135,7 @@ public class GestorEncarrecs {
             String producto = entrarDades("Producto: "); if (null == producto) return;
             int unitats = Integer.parseInt(entrarDades("Unitats: ")); if (0 == unitats) return;
             gestor.lliurarUnitatsProducte(producto, unitats);
+            gestor.afegirEncarrecsProductes(new EncarrecsProductes(id, gestor.obtenirIDprodcute(producto), unitats ));
         }
         gestor.afegirEncarrec(new Encarrec(id, gestor.covert(data), idclient));
         mostrarDades("Operació completada satisfactòriament.\n");

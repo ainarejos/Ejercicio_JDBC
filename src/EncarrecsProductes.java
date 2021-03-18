@@ -9,7 +9,7 @@ public class EncarrecsProductes {
         numarticles=p;
     }
 
-    public int getId() { return idencarrec; }
-    public int getData() { return idproducte; }
-    public int getIdClient() { return numarticles; }
+    public int getIdencarrec() { return idencarrec; }
+    public int getIdproducte() { return idproducte; }
+    public int getNumarticlest() { return numarticles; }
 }
