@@ -1,3 +1,4 @@
+//Clase para la tabla Productes.
 public class Producte {
     private int id;
     private String nom;

@@ -5,9 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.InflaterOutputStream;
 
+/*En esta clase es donde se prueba y se ejecutan todos los metodos de las
+distintas clases que componen el programa.*/
 public class GestorEncarrecs {
     GestorBD gestor;
     BufferedReader entrada;
+
+    /*main, en este se instancia un objeto de la clase GestorBD y se ejecuta el
+     metodo start.*/
     public static void main(String[] args) throws Exception {
         GestorEncarrecs gbd = new GestorEncarrecs();
         gbd.start();
@@ -16,6 +21,8 @@ public class GestorEncarrecs {
         gestor = new GestorBD();
         entrada = new BufferedReader(new InputStreamReader(System.in));
     }
+
+    //Metodo para el menu, este pide un valor y segun el valor inroducido se ejecuta un metodo o otro.
     public void start() throws Exception{
         int opcio;
         while (0 != (opcio = menuPrincipal())){
@@ -45,11 +52,14 @@ public class GestorEncarrecs {
                     default: mostrarDades("Opció incorrecta\n");
                 }
             }catch (Exception ex){
+                System.out.println(ex.getMessage());
                 mostrarDades("Opció incorrecta\n");
             }
         }
         gestor.tancar();
     }
+
+    //Este metodo muestra por pantalla las distintas opciones del programa.
     private int menuPrincipal() throws Exception{
         String menu = "\nQuina acció vols realitzar?\n" + "[1] Cercar client\n" + "" +
                 "[2] Afegir client\n" + "[3] Afegir Producte\n" + "[4] Llistar Producte\n"
@@ -60,8 +70,8 @@ public class GestorEncarrecs {
         }catch (Exception ex){ return -1;}
     }
 
-    /** Amb els metodes entrarDades i mostrarDades, fem el codi independent de la interficie.
-     *    Si mai es fan canvis, nomes cal canviar aquests dos metodes */
+    /* Amb els metodes entrarDades i mostrarDades, fem el codi independent de la interficie.
+     Si mai es fan canvis, nomes cal canviar aquests dos metodes */
     private String entrarDades(String pregunta) throws IOException {
         mostrarDades(pregunta);
         return entrarDades();
@@ -77,6 +87,8 @@ public class GestorEncarrecs {
         System.out.print(dades);
     }
 
+    /*Este metodo busca los clientes mediante el nombre,
+     para ello le pide al usuario que introduzca un nombre.*/
     private void cercarClient() throws  Exception{
         String nom = entrarDades("Introdueix el nom del client: "); if (null == nom) return;
         List<Client> llista = gestor.cercarClient(nom);
@@ -88,6 +100,8 @@ public class GestorEncarrecs {
         }
     }
 
+    /*Este metodo añade un cliente a la tabla clientes, para ello pide
+     al usuario que introduzca todos los datos necesarios.*/
     public void afegirClient() throws Exception {
         mostrarDades("Introduex les seguents dades del nou usuari (deixa en blanc" +
                 " per sortir).\n");
@@ -102,6 +116,8 @@ public class GestorEncarrecs {
         mostrarDades("Operació completada satisfactòriament.\n");
     }
 
+    /*Este metodo añade un producto a la tabla productos, para ello pide al usuario
+    los datos necesarios.*/
     public void afegirProducte() throws Exception {
         mostrarDades("Introduex les seguents dades del nou producte (deixa en blanc" +
                 " per sortir).\n");
@@ -116,11 +132,14 @@ public class GestorEncarrecs {
         mostrarDades("Operació completada satisfactòriament.\n");
     }
 
+    //Muestra todos los productos de la tabla productos.
     public void llistarProductes() throws Exception {
         gestor.llistarProductes();
         mostrarDades("Operació completada satisfactòriament.\n");
     }
 
+    /*Este metodo añade un nuevo encargo a la tabla encarrecs, además añade los datos de
+    * los prodcutos seleccionados en el encargo a la tabla encarrecproductes*/
     public void afegirEncarrec() throws Exception{
         mostrarDades("Introduex les seguents dades del nou encarrec (deixa en blanc" +
                 " per sortir).\n");
@@ -141,14 +160,18 @@ public class GestorEncarrecs {
         mostrarDades("Operació completada satisfactòriament.\n");
     }
 
+    /*Este metodo elimina un encargo de la tabla encarrecproductes, además
+    borra todas las filas relacionadas con ese encargo de la tabla encarrecproductes*/
     public void eliminarEncarrec() throws Exception{
         mostrarDades("Introduex 'ID de l'encarrec que es vol elminiar (deixa en blanc" +
                 " per sortir).\n");
         int encarrec=Integer.parseInt(entrarDades("id: ")); if (0 == encarrec) return;
         gestor.eliminarEncarrec(encarrec);
+        gestor.eliminarEncarrecProdcutes(encarrec);
         mostrarDades("Operació completada satisfactòriament.\n");
     }
 
+    //Este metodo muestra los encargos del cliente que se especifique.
     public void consultarEncarrec() throws Exception{
         mostrarDades("Introduex 'ID del client que es vol consultar els seus encarrecs (deixa en blanc" +
                 " per sortir).\n");
